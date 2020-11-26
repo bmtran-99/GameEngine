@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Engine_pch.h"
 #include "Event.h"
-#include "engine\core\MouseCodes.h"
 
 namespace GEngine
 {

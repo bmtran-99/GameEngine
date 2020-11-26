@@ -1,8 +1,10 @@
+#include "Engine_pch.h"
 #include "ImGuiLayer.h"
+#include "imgui.h"
+
 #include "engine\core\Application.h"
 #include "engine\core\Log.h"
 
-#include "imgui.h"
 #include "opengl\imgui_impl_glfw.h"
 #include "opengl\imgui_impl_opengl3.h"
 
@@ -74,7 +76,7 @@ namespace GEngine
 
 		/* Setup OpenGL and GLFW bindings */
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 410");
+		ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
 	}
 
 	void ImGuiLayer::OnDetach()
@@ -106,11 +108,6 @@ namespace GEngine
 
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
-
-		/* Testing but didnt work either */
-		ImGui::Begin("Demo");
-		ImGui::Button("Hello!");
-		ImGui::End();
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

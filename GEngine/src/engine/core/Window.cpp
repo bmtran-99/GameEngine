@@ -1,11 +1,10 @@
+#include "Engine_pch.h"
 #include "Window.h"
 #include "Log.h"
 
 #include "engine\events\ApplicationEvent.h"
 #include "engine\events\KeyEvent.h"
 #include "engine\events\MouseEvent.h"
-
-#include <glad\glad.h>
 
 #define ASSERT(x, ...) { if (!(x))  {ENGINE_CORE_ERROR(__VA_ARGS__); __debugbreak(); } }
 
@@ -37,10 +36,9 @@ namespace GEngine
 		/* Initialize GLFW lib */
 		if (!b_glfwInit)
 		{
-			int success = glfwInit();
-			ASSERT(success, "Failed to Initialize GLFW!");
+			b_glfwInit = glfwInit();
+			ASSERT(b_glfwInit, "Failed to Initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
-			b_glfwInit = true;
 		}
 		
 		/* Create a windowed mode window and its OpenGL context */
@@ -147,9 +145,6 @@ namespace GEngine
 
 	void Window::OnUpdate()
 	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
 		/* Swap front and back buffers */
 		glfwSwapBuffers(m_Window);
 

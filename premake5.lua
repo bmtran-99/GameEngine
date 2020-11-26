@@ -10,9 +10,11 @@ workspace "GEngine"
 	
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-include "GEngine/vendor/glfw"
-include "GEngine/vendor/glad"
-include "GEngine/vendor/imgui"
+group "Dependencies"
+	include "GEngine/vendor/glfw"
+	include "GEngine/vendor/glad"
+	include "GEngine/vendor/imgui"
+group ""
 
 project "GEngine"
 	location "GEngine"
@@ -21,6 +23,9 @@ project "GEngine"
 
 	targetdir ("bin/".. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/".. outputdir .. "/%{prj.name}")
+
+	pchheader "Engine_pch.h"
+	pchsource "GEngine/src/Engine_pch.cpp"
 
 	files
 	{
@@ -47,7 +52,7 @@ project "GEngine"
 	
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -64,17 +69,17 @@ project "GEngine"
 
 	filter "configurations:Debug"
 		defines "GE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 
@@ -108,7 +113,7 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -118,15 +123,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "GE_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "GE_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "GE_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		optimize "On"

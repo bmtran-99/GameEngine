@@ -1,9 +1,8 @@
 #pragma once
 
-#include "engine\core\Core.h"
+#include "Engine_pch.h"
 
-#include <string>
-#include <sstream>
+#include "engine\core\Core.h"
 
 namespace GEngine
 {

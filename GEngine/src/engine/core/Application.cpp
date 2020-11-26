@@ -1,7 +1,7 @@
+#include "Engine_pch.h"
 #include "Application.h"
 #include "Log.h"
 #include "engine\gui\ImGuiLayer.h"
-#include <glad\glad.h>
 
 namespace GEngine
 {
@@ -12,8 +12,6 @@ namespace GEngine
 		m_Instance = this;
 		m_Window = std::make_unique<Window>();
 		m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
-
-		//PushOverlay(new GEngine::ImGuiLayer());
 	}
 
 	Application::~Application()
@@ -24,7 +22,9 @@ namespace GEngine
 	{
 		while (m_Running)
 		{
-			glClearColor(1, 0, 1, 1);
+			/* Render here */
+			glClear(GL_COLOR_BUFFER_BIT);
+
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
 

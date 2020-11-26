@@ -1,11 +1,9 @@
 #pragma once
 
+#include "Engine_pch.h"
+
 #include "engine\core\Core.h"
 #include "engine\events\Event.h"
-
-#include <GLFW\glfw3.h>
-#include <string>
-#include <functional>
 
 namespace GEngine
 {
