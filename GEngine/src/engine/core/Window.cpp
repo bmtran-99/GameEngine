@@ -53,9 +53,9 @@ namespace GEngine
 		glfwMakeContextCurrent(m_Window);
 		glfwSwapInterval(1);
 
-		/* set up GLAD */
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		ASSERT(status, "Failed to Initialize GLAD!");
+		/* set up OPENGL context specific */
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 
 		/* sets the user-defined pointer of the specified window */
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -146,7 +146,7 @@ namespace GEngine
 	void Window::OnUpdate()
 	{
 		/* Swap front and back buffers */
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffer();
 
 		/* Poll for and process events */
 		glfwPollEvents();

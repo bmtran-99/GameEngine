@@ -3,9 +3,9 @@
 #include "Core.h"
 #include "Window.h"
 #include "LayerStack.h"
-#include "engine\events\ApplicationEvent.h"
 
-class ImGuiLayer;
+#include "engine\events\ApplicationEvent.h"
+#include "engine\renderer\Renderer.h"
 
 namespace GEngine
 {
@@ -32,6 +32,8 @@ namespace GEngine
 		std::unique_ptr<Window> m_Window;
 
 		LayerStack m_LayerStack;
+
+		Renderer* m_RendererLayer;
 	};
 
 	Application* CreateApplication();

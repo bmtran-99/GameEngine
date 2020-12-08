@@ -14,6 +14,7 @@
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
 
+#include "engine\core\Log.h"
 #include "engine\core\KeyCodes.h"
 #include "engine\core\MouseCodes.h"
 

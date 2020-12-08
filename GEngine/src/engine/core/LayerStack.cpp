@@ -36,6 +36,11 @@ namespace GEngine
 
 	void LayerStack::PopOverlay(Layer* overlay)
 	{
-		m_Layers.erase(m_Layers.end() - 1);
+		auto it = std::find(m_LayerInsert, m_Layers.end(), overlay);
+		if (it != m_Layers.end())
+		{
+			overlay->OnDetach();
+			m_Layers.erase(it);
+		}
 	}
 }

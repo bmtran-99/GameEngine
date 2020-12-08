@@ -5,6 +5,8 @@
 #include "engine\core\Core.h"
 #include "engine\events\Event.h"
 
+#include "opengl\OpenGLContext.h"
+
 namespace GEngine
 {
 	struct WindowProps
@@ -25,12 +27,12 @@ namespace GEngine
 		Window(const WindowProps& props = WindowProps());
 		~Window();
 
-		uint32_t GetWidth() const { return m_Data.Width; }
-		uint32_t GetHeight() const { return m_Data.Height; }
+		inline uint32_t GetWidth() const { return m_Data.Width; }
+		inline uint32_t GetHeight() const { return m_Data.Height; }
 
 		void OnUpdate();
 
-		void* GetNativeWindow() const { return m_Window; }
+		inline void* GetNativeWindow() const { return m_Window; }
 
 		inline void SetEventCallback(const EventCallbackfn& callback) { m_Data.EventCallback = callback; }
 
@@ -50,6 +52,8 @@ namespace GEngine
 		};
 
 		WindowData m_Data;
+
+		OpenGLContext* m_Context;
 
 		bool b_glfwInit = false;
 	};

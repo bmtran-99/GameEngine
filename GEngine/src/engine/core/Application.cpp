@@ -1,10 +1,14 @@
 #include "Engine_pch.h"
 #include "Application.h"
 #include "Log.h"
-#include "engine\gui\ImGuiLayer.h"
+#include "Input.h"
+
+#include <glm.hpp>
 
 namespace GEngine
 {
+	typedef glm::vec3 Vertex;
+
 	Application* Application::m_Instance = nullptr;
 
 	Application::Application()
@@ -12,6 +16,36 @@ namespace GEngine
 		m_Instance = this;
 		m_Window = std::make_unique<Window>();
 		m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+
+		m_RendererLayer = new Renderer();
+		PushLayer(m_RendererLayer);
+
+		float vertices[] = {
+			-0.5f,  0.5f,  0.5f,          
+			-0.5f, -0.5f,  0.5f,		 
+			 0.5f, -0.5f,  0.5f,		 
+			 0.5f,  0.5f,  0.5f,		 
+			 0.5f,  0.5f, -0.5f,
+			 0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,
+			-0.5f,  0.5f, -0.5f
+		};
+
+		unsigned int indices[] = {
+			0, 1, 2,
+			0, 2, 3,
+
+			7, 6, 1,
+			7, 1, 0,
+
+			4, 5, 6,
+			4, 6, 7,
+
+			3, 2, 5,
+			3, 5, 4
+		};
+
+		m_RendererLayer->Bind(sizeof(vertices), vertices, sizeof(indices), indices);
 	}
 
 	Application::~Application()
@@ -23,7 +57,8 @@ namespace GEngine
 		while (m_Running)
 		{
 			/* Render here */
-			glClear(GL_COLOR_BUFFER_BIT);
+			m_RendererLayer->Clear();
+			m_RendererLayer->Draw(8);
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
