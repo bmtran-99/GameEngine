@@ -2,12 +2,13 @@
 #include "Application.h"
 #include "Log.h"
 #include "Input.h"
+#include "engine\renderer\Primitives.h"
 
 #include <glm.hpp>
 
 namespace GEngine
 {
-	typedef glm::vec3 Vertex;
+	Cube cube;
 
 	Application* Application::m_Instance = nullptr;
 
@@ -20,32 +21,7 @@ namespace GEngine
 		m_RendererLayer = new Renderer();
 		PushLayer(m_RendererLayer);
 
-		float vertices[] = {
-			-0.5f,  0.5f,  0.5f,          
-			-0.5f, -0.5f,  0.5f,		 
-			 0.5f, -0.5f,  0.5f,		 
-			 0.5f,  0.5f,  0.5f,		 
-			 0.5f,  0.5f, -0.5f,
-			 0.5f, -0.5f, -0.5f,
-			-0.5f, -0.5f, -0.5f,
-			-0.5f,  0.5f, -0.5f
-		};
-
-		unsigned int indices[] = {
-			0, 1, 2,
-			0, 2, 3,
-
-			7, 6, 1,
-			7, 1, 0,
-
-			4, 5, 6,
-			4, 6, 7,
-
-			3, 2, 5,
-			3, 5, 4
-		};
-
-		m_RendererLayer->Bind(sizeof(vertices), vertices, sizeof(indices), indices);
+		m_RendererLayer->Bind(cube.getNrOfVertices(), cube.getVertices(), cube.getNrOfIndices(), cube.getIndices());
 	}
 
 	Application::~Application()
@@ -58,7 +34,7 @@ namespace GEngine
 		{
 			/* Render here */
 			m_RendererLayer->Clear();
-			m_RendererLayer->Draw(8);
+			m_RendererLayer->Draw(cube.getNrOfVertices());
 
 			for (Layer* layer : m_LayerStack)
 				layer->OnUpdate();
